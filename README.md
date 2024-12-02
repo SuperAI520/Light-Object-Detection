@@ -2,57 +2,10 @@
 
 <img src="docs/imgs/Title.jpg" />
 
-# NanoDet-Plus
+# NanoDet
 **Super fast and high accuracy lightweight anchor-free object detection model. Real-time on mobile devices.**
 
-
-[![CI testing](https://img.shields.io/github/checks-status/RangiLyu/nanodet/main?label=CI&style=flat)](https://img.shields.io/github/checks-status/RangiLyu/nanodet/main?label=CI&style=flat)
-![Codecov](https://img.shields.io/codecov/c/github/RangiLyu/nanodet?color=hotpink)
-[![GitHub license](https://img.shields.io/github/license/RangiLyu/nanodet?color=turquoise&style=flat)](https://github.com/RangiLyu/nanodet/blob/main/LICENSE)
-[![Github downloads](https://img.shields.io/github/downloads/RangiLyu/nanodet/total?color=orange&label=downloads&logo=github&logoColor=lightgrey&style=flat)](https://img.shields.io/github/downloads/RangiLyu/nanodet/total?color=yellow&label=Downloads&logo=github&logoColor=lightgrey&style=flat)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/RangiLyu/nanodet?style=flat)](https://img.shields.io/github/v/release/RangiLyu/nanodet?style=flat)
-
-</div>
-
-* ⚡Super lightweight: Model file is only 980KB(INT8) or 1.8MB(FP16).
-* ⚡Super fast: 97fps(10.23ms) on mobile ARM CPU.
-* 👍High accuracy: Up to **34.3 mAP<sup>val</sup>@0.5:0.95** and still realtime on CPU.
-* 🤗Training friendly:  Much lower GPU memory cost than other models. Batch-size=80 is available on GTX1060 6G.
-* 😎Easy to deploy: Support various backends including **ncnn, MNN and OpenVINO**. Also provide **Android demo** based on ncnn inference framework.
-
-****
-
 # Introduction
-
-
-![](docs/imgs/nanodet-plus-arch.png)
-
-NanoDet is a FCOS-style one-stage anchor-free object detection model which using [Generalized Focal Loss](https://arxiv.org/pdf/2006.04388.pdf) as classification and regression loss.
-
-In NanoDet-Plus, we propose a novel label assignment strategy with a simple **assign guidance module (AGM)** and a **dynamic soft label assigner (DSLA)** to solve the optimal label assignment problem in lightweight model training. We also introduce a light feature pyramid called Ghost-PAN to enhance multi-layer feature fusion. These improvements boost previous NanoDet's detection accuracy by **7 mAP** on COCO dataset.
-
-[NanoDet-Plus 知乎中文介绍](https://zhuanlan.zhihu.com/p/449912627)
-
-[NanoDet 知乎中文介绍](https://zhuanlan.zhihu.com/p/306530300)
-
-QQ交流群：908606542 (答案：炼丹)
-
-****
-## Benchmarks
-
-Model          |Resolution| mAP<sup>val<br>0.5:0.95 |CPU Latency<sup><br>(i7-8700) |ARM Latency<sup><br>(4xA76) | FLOPS      |   Params  | Model Size
-:-------------:|:--------:|:-------:|:--------------------:|:--------------------:|:----------:|:---------:|:-------:
-NanoDet-m      | 320*320 |   20.6   | **4.98ms**           | **10.23ms**          | **0.72G**  | **0.95M** | **1.8MB(FP16)** &#124; **980KB(INT8)**
-**NanoDet-Plus-m** | 320*320 | **27.0** | **5.25ms**       | **11.97ms**          | **0.9G**   | **1.17M** | **2.3MB(FP16)** &#124; **1.2MB(INT8)**
-**NanoDet-Plus-m** | 416*416 | **30.4** | **8.32ms**       | **19.77ms**          | **1.52G**  | **1.17M** | **2.3MB(FP16)** &#124; **1.2MB(INT8)**
-**NanoDet-Plus-m-1.5x** | 320*320 | **29.9** | **7.21ms**  | **15.90ms**          | **1.75G**  | **2.44M** | **4.7MB(FP16)** &#124; **2.3MB(INT8)**
-**NanoDet-Plus-m-1.5x** | 416*416 | **34.1** | **11.50ms** | **25.49ms**          | **2.97G**   | **2.44M** | **4.7MB(FP16)** &#124; **2.3MB(INT8)**
-YOLOv3-Tiny    | 416*416 |   16.6   | -                    | 37.6ms               | 5.62G      | 8.86M     |   33.7MB
-YOLOv4-Tiny    | 416*416 |   21.7   | -                    | 32.81ms              | 6.96G      | 6.06M     |   23.0MB
-YOLOX-Nano     | 416*416 |   25.8   | -                    | 23.08ms              | 1.08G      | 0.91M     |   1.8MB(FP16)
-YOLOv5-n       | 640*640 |   28.4   | -                    | 44.39ms              | 4.5G       | 1.9M      |   3.8MB(FP16)
-FBNetV5        | 320*640 |   30.4   | -                    | -                    | 1.8G       | -         |   -
-MobileDet      | 320*320 |   25.6   | -                    | -                    | 0.9G       | -         |   -
 
 ***Download pre-trained models and find more models in [Model Zoo](#model-zoo) or in [Release Files](https://github.com/RangiLyu/nanodet/releases)***
 
@@ -71,15 +24,6 @@ MobileDet      | 320*320 |   25.6   | -                    | -                  
 
 ****
 
-## NEWS!!!
-
-* [2023.01.20] Upgrade to [pytorch-lightning-1.9](https://github.com/Lightning-AI/lightning/releases/tag/1.9.0). The minimum PyTorch version is upgraded to 1.10. Support FP16 training(Thanks @crisp-snakey). Support ignore label(Thanks @zero0kiriyu).
-
-* [2022.08.26] Upgrade to [pytorch-lightning-1.7](https://lightning.ai/). The minimum PyTorch version is upgraded to 1.9. To use previous version of PyTorch, please install [NanoDet <= v1.0.0-alpha-1](https://github.com/RangiLyu/nanodet/tags)
-
-* [2021.12.25] **NanoDet-Plus** release! Adding **AGM**(Assign Guidance Module) & **DSLA**(Dynamic Soft Label Assigner) to improve **7 mAP** with only a little cost.
-
-Find more update notes in [Update notes](docs/update.md).
 ## Demo
 
 ### Android demo
@@ -298,30 +242,3 @@ Please refer to [demo_mnn](demo_mnn/README.md).
 Please refer to [android_demo](demo_android_ncnn/README.md).
 
 ****
-
-## Citation
-
-If you find this project useful in your research, please consider cite:
-
-```BibTeX
-@misc{=nanodet,
-    title={NanoDet-Plus: Super fast and high accuracy lightweight anchor-free object detection model.},
-    author={RangiLyu},
-    howpublished = {\url{https://github.com/RangiLyu/nanodet}},
-    year={2021}
-}
-```
-
-****
-
-## Thanks
-
-https://github.com/Tencent/ncnn
-
-https://github.com/open-mmlab/mmdetection
-
-https://github.com/implus/GFocal
-
-https://github.com/cmdbug/YOLOv5_NCNN
-
-https://github.com/rbgirshick/yacs
