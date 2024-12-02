@@ -1,5 +1,3 @@
-<div align="center">
-
 <img src="docs/imgs/Title.jpg" />
 
 # NanoDet
